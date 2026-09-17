@@ -64,4 +64,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(body(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_ERROR", "Something went wrong"));
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(body(HttpStatus.NOT_FOUND, "RESOURCE_NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidAvailabilityException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidAvailability(InvalidAvailabilityException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(body(HttpStatus.BAD_REQUEST, "INVALID_AVAILABILITY", ex.getMessage()));
+    }
+
+
 }
