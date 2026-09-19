@@ -78,4 +78,23 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(SlotUnavailableException.class)
+    public ResponseEntity<Map<String,Object>> handleSlotUnavailable(SlotUnavailableException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(body(HttpStatus.CONFLICT,"SLOT_UNAVAILABLE", ex.getMessage()));
+    }
+
+    @ExceptionHandler(CancellationNotAllowedException.class)
+    public ResponseEntity<Map<String, Object>> handleCancellationNotAllowed(CancellationNotAllowedException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(body(HttpStatus.BAD_REQUEST, "CANCELLATION_NOT_ALLOWED", ex.getMessage()));
+    }
+
+    @ExceptionHandler(BookingNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleBookingNotFound(BookingNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(body(HttpStatus.NOT_FOUND, "BOOKING_NOT_FOUND", ex.getMessage()));
+    }
+
+
 }

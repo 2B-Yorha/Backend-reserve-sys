@@ -132,6 +132,17 @@ public class TutorService {
         return windows.stream().map(w -> new SlotResponse(w.start(), w.end())).toList();
     }
 
+    public Long getTutorProfileIdForUser(String userEmail) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        TutorProfile profile = tutorProfileRespository.findByUserId(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Tutor profile not found"));
+
+        return profile.getId();
+    }
+
+
     private void validateSlotRequest(AvailabilitySlotRequest req) {
         if (!req.startTime().isBefore(req.endTime())) {
             throw new InvalidAvailabilityException("startTime must be before endTime");
