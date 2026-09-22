@@ -45,7 +45,7 @@ public class AuthService {
         return new RegisterResponse(saved.getId(), saved.getEmail(), saved.getRole());
     }
 
-    public LoginResponse login(LoginRequest request) {
+    public User authenticateAndGetUser(LoginRequest request) {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(InvalidCredentialsExcption::new);
 
@@ -57,8 +57,7 @@ public class AuthService {
             throw new InvalidCredentialsExcption();
         }
 
-        String token = jwtService.generateToken(user);
-        return new LoginResponse(token, jwtService.getExpirationMs());
+        return user;
     }
 
 

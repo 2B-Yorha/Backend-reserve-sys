@@ -96,5 +96,11 @@ public class GlobalExceptionHandler {
                 .body(body(HttpStatus.NOT_FOUND, "BOOKING_NOT_FOUND", ex.getMessage()));
     }
 
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidRefreshToken(InvalidRefreshTokenException ex){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(body(HttpStatus.UNAUTHORIZED, "INVALID_REFRESH_TOKEN", ex.getMessage()));
+    }
+
 
 }
