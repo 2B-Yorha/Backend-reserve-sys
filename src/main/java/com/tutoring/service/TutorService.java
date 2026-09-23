@@ -105,6 +105,7 @@ public class TutorService {
         availabilitySlotRepository.delete(slot);
     }
 
+    @Transactional
     public List<TutorSummaryResponse> listTutors(String subject) {
         List<TutorProfile> profiles = (subject == null || subject.isBlank())
                 ? tutorProfileRespository.findAll()
@@ -113,6 +114,7 @@ public class TutorService {
         return profiles.stream().map(this::toSummaryResponse).toList();
     }
 
+    @Transactional
     public TutorDetailResponse getTutorDetail(Long tutorProfileId) {
         TutorProfile profile = tutorProfileRespository.findById(tutorProfileId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tutor not found"));
